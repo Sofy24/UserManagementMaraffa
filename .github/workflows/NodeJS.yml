@@ -6,7 +6,7 @@ name: CI
 on:
   workflow_call:
   push:
-    branches: [ "develop" ]
+    branches: [ "develop", "feature/**" ]
   pull_request:
     branches: [ "main", "develop" ]
 
@@ -37,7 +37,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        # cache: 'yarn'
+        cache: 'yarn'
     - name: Run install
       uses: borales/actions-yarn@v4
       with:
@@ -60,15 +60,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        # cache: 'npm'
-    - name: Run install
+        cache: 'yarn'
+
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+
+    - name: Run jest tests 
       uses: borales/actions-yarn@v4
       with:
-        cmd: test # will run `yarn install` command
+        cmd: test 
 
   # success:
   #   runs-on: ubuntu-22.04
