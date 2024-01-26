@@ -1,12 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, Generated } from 'typeorm';
 import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id?: UUID;
+  @Column()
+  @Generated('uuid')
+  id?: string;
 
+  // @PrimaryColumn()
   @Column()
   @ApiProperty()
   nickname: string;
