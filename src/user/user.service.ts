@@ -11,7 +11,4 @@ export class UserService extends TypeOrmCrudService<User> {
   constructor(@InjectRepository(User) public repo: Repository<User>) {
     super(repo);
   }
-
-  // createOne(req: CrudRequest, dto: DeepPartial<User>): Promise<User> {
-  // }
 }

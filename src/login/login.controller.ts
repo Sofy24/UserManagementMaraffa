@@ -21,11 +21,16 @@ export class LoginController {
   })
   @ApiResponse({ status: 200, description: 'Authentication successfull' })
   @ApiResponse({ status: 401, description: 'Credentials are incorrect' })
+  @ApiResponse({ status: 404, description: 'User not found' })
   public async login(@Body() body: LoginDto, @Res() res: Response) {
     const user = await this.userService.findOne({
       where: { nickname: body.nickname },
       select: { nickname: true, password: true },
     });
+    if (!user) {
+      res.status(404).send({ message: 'User not found' });
+      return;
+    }
     const authenticated = await this.loginService.validateUser(
       body.password,
       user,
