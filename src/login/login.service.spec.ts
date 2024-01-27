@@ -7,9 +7,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 describe('LoginService', () => {
   let service: LoginService;
   const user: User = {
-    nickname: 'test',
+    nickname: 'asd',
     email: '',
-    password: 'pwd',
+    password: '$2b$12$TQsdmNHcNIyX44rM9zrYj.NeZkHjWlfVLLT/boHltshcqL54g7c7W',
   };
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -24,10 +24,6 @@ describe('LoginService', () => {
   });
 
   it('should validate user ', async () => {
-    expect(await service.validateUser('test', 'pwd', user)).toBeDefined();
-    expect(await service.validateUser('test', 'pwd', user)).toEqual(user);
-    // expect(await service.validateUser('test', 'pwd', user)).toBeInstanceOf(
-    //   User,
-    // );
+    expect(await service.validateUser('password', user)).toBe(true);
   }, 300_000);
 });

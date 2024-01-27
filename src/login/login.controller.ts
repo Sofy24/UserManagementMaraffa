@@ -1,6 +1,7 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Body, Controller, Get, Res } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { LoginService } from './login.service';
+import { Response } from 'express';
 
 @Controller('login')
 export class LoginController {
@@ -10,10 +11,14 @@ export class LoginController {
   ) {}
 
   @Get()
-  public async login() {
+  public async login(@Body() body: any, @Res() res: Response) {
+    console.log(body);
     const user = await this.userService.findOne({
-      where: { nickname: 'string' },
+      where: { nickname: body.nickname },
+      select: { nickname: true, password: true },
     });
-    return this.loginService.validateUser('string', 'string', user);
+    res
+      .status((await this.loginService.validateUser(body, user)) ? 200 : 401)
+      .send();
   }
 }

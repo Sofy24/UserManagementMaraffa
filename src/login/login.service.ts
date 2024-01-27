@@ -2,17 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { User } from 'src/entities/user.entity';
 
+import * as bcrypt from 'bcrypt';
+
 @Injectable()
 export class LoginService {
-  async validateUser(
-    nickname: string,
-    password: string,
-    user: User,
-  ): Promise<any> {
-    if (user && user.password === password) {
-      const { password, ...result } = user;
-      return user;
+  private checkPassword(password: string, hashedPassword: string): boolean {
+    return bcrypt.compareSync(password, hashedPassword);
+  }
+  async validateUser(password: string, user: Partial<User>): Promise<any> {
+    if (user && user.password) {
+      return this.checkPassword(password, user.password);
     }
-    return null;
+    throw new Error('User is not defined');
   }
 }
