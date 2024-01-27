@@ -8,7 +8,7 @@ export class User {
   @Generated('uuid')
   id?: string;
 
-  @PrimaryColumn()
+  @PrimaryColumn({ unique: true })
   @ApiProperty()
   nickname: string;
 
@@ -28,6 +28,11 @@ export class User {
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   @ApiProperty()
   registrationDate?: Date;
+
+
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
+  @ApiProperty()
+  latestLogin?: Date;
 
   @Column()
   @ApiProperty({ default: 0 })

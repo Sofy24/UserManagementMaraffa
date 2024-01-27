@@ -27,16 +27,21 @@ export class LoginController {
       where: { nickname: body.nickname },
       select: { nickname: true, password: true },
     });
-    if (!user) {
-      res.status(404).send({ message: 'User not found' });
-      return;
-    }
+    if (!user) return res.status(404).send({ message: 'User not found' });
     const authenticated = await this.loginService.validateUser(
       body.password,
       user,
     );
-    res
-      .status(authenticated ? 200 : 401)
-      .send(authenticated ? { message: 'ok' } : { message: 'ko' });
+    if (!authenticated) return res.status(401).send({ message: 'ko' });
+
+    await this.userService.repo.update(
+      {
+        nickname: user.nickname,
+      },
+      {
+        latestLogin: new Date(),
+      },
+    );
+    return res.status(200).send({ message: 'ok' });
   }
 }
