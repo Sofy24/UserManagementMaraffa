@@ -19,7 +19,10 @@ export class UserPasswordInterceptor implements NestInterceptor {
 
   async intercept(context: ExecutionContext, next: CallHandler): Promise<any> {
     // Insert of one or more users
-    if (context.switchToHttp().getRequest().method === 'POST') {
+    if (
+      context.switchToHttp().getRequest().method != 'GET' &&
+      context.switchToHttp().getRequest().method != 'DELETE'
+    ) {
       const body = context.switchToHttp().getRequest().body;
       // bulk operation
       if (Array.isArray(context.switchToHttp().getRequest().body)) {

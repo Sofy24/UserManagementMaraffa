@@ -12,6 +12,13 @@ import { UserPasswordInterceptor } from 'src/interceptors/user.password.intercep
   model: {
     type: User,
   },
+  params: {
+    nickname: {
+      field: 'nickname',
+      type: 'string',
+      primary: true,
+    },
+  }
 })
 @UseInterceptors(ClassSerializerInterceptor)
 @UseInterceptors(UserPasswordInterceptor)

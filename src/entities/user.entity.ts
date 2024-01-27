@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { Entity, Column, Generated, PrimaryColumn } from 'typeorm';
-import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
 @Entity()
 export class User {
@@ -10,7 +9,6 @@ export class User {
   id?: string;
 
   @PrimaryColumn()
-  // @Column()
   @ApiProperty()
   nickname: string;
 
