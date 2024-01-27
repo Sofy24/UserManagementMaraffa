@@ -18,7 +18,7 @@ import { UserPasswordInterceptor } from 'src/interceptors/user.password.intercep
       type: 'string',
       primary: true,
     },
-  }
+  },
 })
 @UseInterceptors(ClassSerializerInterceptor)
 @UseInterceptors(UserPasswordInterceptor)
