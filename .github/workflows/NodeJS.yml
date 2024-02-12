@@ -46,6 +46,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout
+    - uses: actions/checkout@v3
     - name: Set release tag
       id: set_tag
       run: echo "RELEASE_TAG=v$(echo ${{ GITHUB_REF }} | awk -F'/' '{print ${{3}} }')" >> ${{ GITHUB_ENV }}    
