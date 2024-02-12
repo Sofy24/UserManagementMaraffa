@@ -37,11 +37,14 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        # cache: 'yarn'
+        cache: 'yarn'
     - name: Run install
       uses: borales/actions-yarn@v4
       with:
         cmd: install # will run `yarn install` command
+
+  deploy:
+    steps:
     - name: Set release tag
       id: set_tag
       run: echo "RELEASE_TAG=v$(echo ${{ GITHUB_REF }} | awk -F'/' '{print ${{3}} }')" >> ${{ GITHUB_ENV }}    
