@@ -54,7 +54,7 @@ jobs:
     - name: Login to GitHub Container Registry
       run: echo "${{ USERMANAGEMENTSECRET.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
     - name: Build and push Docker image
-      env:
+    - env:
           IMAGE_NAME: user_management
           RELEASE_TAG: ${{ env.RELEASE_TAG }}
       ###run: |
