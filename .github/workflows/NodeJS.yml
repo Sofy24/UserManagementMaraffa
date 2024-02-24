@@ -72,7 +72,7 @@ jobs:
         cmd: test
 
   deploy:
-    # if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     needs: test
     permissions: write-all
@@ -117,11 +117,11 @@ jobs:
     - name: Push Docker image
       run: docker push ghcr.io/${{ env.IMAGE_NAME}}:${{ env.VERSION }} 
 
-      if: env.TAG_NAME != ''
-    - name: Build Docker image with tag 
-      run: docker build -t ghcr.io//${{ env.IMAGE_NAME}}:${{ env.TAG_NAME }}  .
-    - name: Push Docker image with tag 
-      run: docker push ghcr.io//${{ env.IMAGE_NAME}}:${{ env.TAG_NAME }}
+    #   if: env.TAG_NAME != ''
+    # - name: Build Docker image with tag 
+    #   run: docker build -t ghcr.io//${{ env.IMAGE_NAME}}:${{ env.TAG_NAME }}  .
+    # - name: Push Docker image with tag 
+    #   run: docker push ghcr.io//${{ env.IMAGE_NAME}}:${{ env.TAG_NAME }}
 
 
   # success:
