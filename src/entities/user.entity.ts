@@ -4,7 +4,7 @@ import { UUID } from 'typeorm/driver/mongodb/bson.typings';
 
 @Entity()
 export class User {
-  @Column()
+  @PrimaryColumn()
   @Generated('uuid')
   id?: string;
 
