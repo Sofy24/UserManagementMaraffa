@@ -6,6 +6,7 @@ name: CI
 on:
   workflow_call:
   push:
+
     branches: [ "main"]
     tags: 
       - '*'
@@ -122,7 +123,6 @@ jobs:
     #   run: docker build -t ghcr.io//${{ env.IMAGE_NAME}}:${{ env.TAG_NAME }}  .
     # - name: Push Docker image with tag 
     #   run: docker push ghcr.io//${{ env.IMAGE_NAME}}:${{ env.TAG_NAME }}
-
 
   # success:
   #   runs-on: ubuntu-22.04

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, Generated } from 'typeorm';
-import { UUID } from 'typeorm/driver/mongodb/bson.typings';
+import { Exclude } from 'class-transformer';
+import { Entity, Column, Generated, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -8,12 +8,12 @@ export class User {
   @Generated('uuid')
   id?: string;
 
-  // @PrimaryColumn()
-  @Column()
+  @PrimaryColumn({ unique: true })
   @ApiProperty()
   nickname: string;
 
-  @Column()
+  @Column({ select: false })
+  @Exclude({ toPlainOnly: true })
   @ApiProperty()
   password: string;
 
@@ -29,6 +29,11 @@ export class User {
   @ApiProperty()
   registrationDate?: Date;
 
+
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
+  @ApiProperty()
+  latestLogin?: Date;
+
   @Column()
   @ApiProperty({ default: 0 })
   gamesPlayed?: number;
@@ -40,4 +45,9 @@ export class User {
   @Column()
   @ApiProperty({ default: 0 })
   criccaNum?: number;
+
+  @Column({ select: false })
+  @Exclude({ toPlainOnly: true })
+  @ApiProperty()
+  salt?: string;
 }

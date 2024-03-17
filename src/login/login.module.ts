@@ -10,6 +10,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
   controllers: [LoginController],
-  providers: [LoginService, UserService,],
+  providers: [LoginService, UserService],
 })
 export class LoginModule {}
