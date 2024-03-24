@@ -8,7 +8,6 @@ import { LoginModule } from './login/login.module';
 import { ConfigModule } from '@nestjs/config';
 import { StatisticModule } from './statistic/statistic.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot(),
