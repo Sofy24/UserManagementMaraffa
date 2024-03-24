@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { LoginModule } from './login/login.module';
 import { ConfigModule } from '@nestjs/config';
+import { StatisticModule } from './statistic/statistic.module';
 
 
 @Module({
@@ -23,6 +24,7 @@ import { ConfigModule } from '@nestjs/config';
     }),
     UserModule,
     LoginModule,
+    StatisticModule,
   ],
   controllers: [AppController],
   providers: [AppService],
