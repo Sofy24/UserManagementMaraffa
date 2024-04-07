@@ -77,7 +77,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.ACTION_TOKEN}}
+          token: ${{ secrets.CHANGELOG }}
       - name: Set project name
         run: echo "REPOSITORY_NAME=user-management-maraffa" >> $GITHUB_ENV
       - name: lowercase github.repository
