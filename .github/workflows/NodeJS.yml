@@ -8,8 +8,8 @@ on:
   release: 
     types: [ published ]
   pull_request:
-    branches: [ "main", "develop" ]
-    types: [ opened, closed ]
+    branches: [ "develop" ]
+    types: [ closed ]
   workflow_dispatch:
 
 defaults:
