@@ -28,20 +28,24 @@ export class LoginController {
       select: { nickname: true, password: true },
     });
     if (!user) return res.status(404).send({ message: 'User not found' });
-    const authenticated = await this.loginService.validateUser(
-      body.password,
-      user,
-    );
-    if (!authenticated) return res.status(401).send({ message: 'ko' });
+    try {
+      const authenticated = await this.loginService.validateUser(
+        body.password,
+        user,
+      );
+      if (!authenticated) return res.status(401).send({ message: 'ko' });
 
-    await this.userService.repo.update(
-      {
-        nickname: user.nickname,
-      },
-      {
-        latestLogin: new Date(),
-      },
-    );
-    return res.status(200).send({ message: 'ok' });
+      await this.userService.repo.update(
+        {
+          nickname: user.nickname,
+        },
+        {
+          latestLogin: new Date(),
+        },
+      );
+      return res.status(200).send({ message: 'ok' });
+    } catch (error) {
+      return res.status(500).send({ message: `Internal server: ${error}` });
+    }
   }
 }
