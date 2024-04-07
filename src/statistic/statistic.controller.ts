@@ -4,7 +4,7 @@ import { User } from 'src/entities/user.entity';
 import { UpdateUserStatDto } from './dto/update-user-stat.dto';
 import { Response } from 'express';
 import { StatisticService } from './statistic.service';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Statistic')
