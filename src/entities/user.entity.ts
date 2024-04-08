@@ -34,15 +34,15 @@ export class User {
   @ApiProperty()
   latestLogin?: Date;
 
-  @Column()
+  @Column({ default: 0 })
   @ApiProperty({ default: 0 })
   gamesPlayed?: number;
 
-  @Column()
+  @Column({ default: 0 })
   @ApiProperty({ default: 0 })
   gamesWon?: number;
 
-  @Column()
+  @Column({ default: 0 })
   @ApiProperty({ default: 0 })
   criccaNum?: number;
 

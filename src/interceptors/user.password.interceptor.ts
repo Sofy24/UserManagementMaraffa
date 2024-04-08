@@ -39,7 +39,7 @@ export class UserPasswordInterceptor implements NestInterceptor {
           ...(await this.hashPassword(body.password)),
         };
       }
-      return next.handle().pipe();
     }
+    return next.handle().pipe();
   }
 }

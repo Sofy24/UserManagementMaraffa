@@ -1,9 +1,9 @@
 import { Body, Controller, Post, Res } from '@nestjs/common';
-import { UserService } from '../user/user.service';
-import { LoginService } from './login.service';
-import { Response } from 'express';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
+import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
+import { LoginService } from './login.service';
 
 @ApiTags('Login')
 @Controller('login')
@@ -28,20 +28,25 @@ export class LoginController {
       select: { nickname: true, password: true },
     });
     if (!user) return res.status(404).send({ message: 'User not found' });
-    const authenticated = await this.loginService.validateUser(
-      body.password,
-      user,
-    );
-    if (!authenticated) return res.status(401).send({ message: 'ko' });
+    try {
+      const authenticated = await this.loginService.validateUser(
+        body.password,
+        user,
+      );
+      if (!authenticated)
+        return res.status(401).send({ message: 'ko, password was wrong' });
 
-    await this.userService.repo.update(
-      {
-        nickname: user.nickname,
-      },
-      {
-        latestLogin: new Date(),
-      },
-    );
-    return res.status(200).send({ message: 'ok' });
+      await this.userService.repo.update(
+        {
+          nickname: user.nickname,
+        },
+        {
+          latestLogin: new Date(),
+        },
+      );
+      return res.status(200).send({ message: 'ok' });
+    } catch (error) {
+      return res.status(500).send({ message: `Internal server: ${error}` });
+    }
   }
 }
