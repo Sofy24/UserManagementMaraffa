@@ -90,7 +90,7 @@ jobs:
       - name: Set version
         run: |
           if [ "${{ github.ref }}" == 'refs/heads/develop' ]; then
-            echo "VERSION=stage" >> ${GITHUB_ENV}
+            echo "VERSION=develop" >> ${GITHUB_ENV}
           else 
             echo "VERSION=latest" >> ${GITHUB_ENV}
           fi
