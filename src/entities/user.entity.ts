@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Transform } from 'class-transformer';
-import { formatDate } from 'src/interceptors/date-transformer';
-import { Entity, Column, Generated, PrimaryColumn } from 'typeorm';
+import { Column, Entity, Generated, PrimaryColumn } from 'typeorm';
+import { formatDate } from '../interceptors/date-transformer';
 
 @Entity()
 export class User {
