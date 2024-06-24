@@ -1,24 +1,9 @@
-import {
-  Body,
-  ClassSerializerInterceptor,
-  Controller,
-  Res,
-  UseInterceptors,
-} from '@nestjs/common';
-import {
-  Crud,
-  CrudController,
-  CrudRequest,
-  Override,
-  ParsedBody,
-  ParsedRequest,
-} from '@nestjsx/crud';
+import { Controller, UseInterceptors } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { Crud, CrudController } from '@nestjsx/crud';
+import { UserPasswordInterceptor } from 'src/interceptors/user.password.interceptor';
 import { User } from '../entities/user.entity';
 import { UserService } from './user.service';
-import { UserPasswordInterceptor } from 'src/interceptors/user.password.interceptor';
-import { Response } from 'express';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UpdateUserStatDto } from '../statistic/dto/update-user-stat.dto';
 
 @Crud({
   model: {
