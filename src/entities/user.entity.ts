@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Exclude } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
+import { formatDate } from 'src/interceptors/date-transformer';
 import { Entity, Column, Generated, PrimaryColumn } from 'typeorm';
 
 @Entity()
@@ -26,11 +27,12 @@ export class User {
   isActive?: boolean;
 
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
+  @Transform(formatDate, { toPlainOnly: true })
   @ApiProperty()
   registrationDate?: Date;
 
-
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
+  @Transform(formatDate, { toPlainOnly: true })
   @ApiProperty()
   latestLogin?: Date;
 
