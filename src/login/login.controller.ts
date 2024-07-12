@@ -28,7 +28,7 @@ export class LoginController {
       where: { nickname: body.nickname },
       select: { nickname: true, password: true },
     });
-    if (!user) return res.status(404).send({ message: 'User not found' });
+    if (!user) return res.status(404).send({ error: 'Utente non trovato' });
     try {
       await this.userService.repo.update(
         { nickname: user.nickname },
@@ -62,14 +62,14 @@ export class LoginController {
       where: { nickname: body.nickname },
       select: { nickname: true, password: true },
     });
-    if (!user) return res.status(404).send({ message: 'User not found' });
+    if (!user) return res.status(404).send({ error: 'Utente non trovato' });
     try {
       const authenticated = await this.loginService.validateUser(
         body.password,
         user,
       );
       if (!authenticated)
-        return res.status(401).send({ message: 'ko, password was wrong' });
+        return res.status(401).send({ error: 'ko, password was wrong' });
 
       await this.userService.repo.update(
         {
