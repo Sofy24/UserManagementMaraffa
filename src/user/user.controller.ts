@@ -24,11 +24,13 @@ import { UserService } from './user.service';
 export class UserController implements CrudController<User> {
   constructor(public service: UserService) {}
 
+  // @ApiBody({ type: User })
   // @ApiResponse({ status: 409, description: 'Conflict, user already exixst' })
   // @Override()
-  // async createOne(
+  // @Post('/register')
+  // async createOneCustom(
   //   @ParsedRequest() req: CrudRequest,
-  //   @ParsedBody() dto: User,
+  //   @Body() dto: User,
   //   @Res() response: Response,
   // ): Promise<any> {
   //   const found = await this.service.findOne({

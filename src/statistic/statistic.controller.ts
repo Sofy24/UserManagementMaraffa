@@ -1,11 +1,11 @@
 import { Body, Controller, Post, Res } from '@nestjs/common';
-import { CrudRequest, ParsedRequest } from '@nestjsx/crud';
-import { User } from 'src/entities/user.entity';
-import { UpdateUserStatDto } from './dto/update-user-stat.dto';
-import { Response } from 'express';
-import { StatisticService } from './statistic.service';
-import { UserService } from '../user/user.service';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CrudRequest, ParsedRequest } from '@nestjsx/crud';
+import { Response } from 'express';
+import { User } from 'src/entities/user.entity';
+import { UserService } from '../user/user.service';
+import { UpdateUserStatDto } from './dto/update-user-stat.dto';
+import { StatisticService } from './statistic.service';
 
 @ApiTags('Statistic')
 @Controller('statistic')
@@ -30,7 +30,8 @@ export class StatisticController {
       const user: User = await this.userService.findOne({
         where: { nickname: player.nickname },
       });
-      if (!user) response.status(404).send({ message: "User doesn't exists" });
+      if (!user)
+        return response.status(404).send({ error: 'Utente non trovato' });
       try {
         const updatedUser: User = this.statisticService.updateGameStatistics(
           user,
@@ -63,7 +64,8 @@ export class StatisticController {
     const user: User = await this.userService.findOne({
       where: { nickname: body.nickname },
     });
-    if (!user) response.status(404).send({ message: "User doesn't exists" });
+    if (!user)
+      return response.status(404).send({ error: 'Utente non trovato' });
     try {
       const updatedUser: User = this.statisticService.updateGameStatistics(
         user,
