@@ -48,6 +48,35 @@ export class LoginController {
     }
   }
 
+  @Post('logout')
+  @ApiOperation({ summary: 'Logs out user' })
+  @ApiBody({
+    description: 'User nickname',
+    type: LoginDto, // Sostituisci con il DTO effettivo per l'autenticazione
+  })
+  @ApiResponse({ status: 200, description: 'Reset successfull' })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  public async logOut(@Body() body: LoginDto, @Res() res: Response) {
+    const user = await this.userService.findOne({
+      where: { nickname: body.nickname },
+      select: { nickname: true, password: true },
+    });
+    if (!user) return res.status(404).send({ error: 'Utente non trovato' });
+    try {
+      await this.userService.repo.update(
+        {
+          nickname: user.nickname,
+        },
+        {
+          isActive: false,
+        },
+      );
+      return res.status(200).send({ message: 'ok' });
+    } catch (error) {
+      return res.status(500).send({ message: `Internal server: ${error}` });
+    }
+  }
+
   @Post('login')
   @ApiOperation({ summary: 'Does the authentication' })
   @ApiBody({
@@ -77,6 +106,7 @@ export class LoginController {
         },
         {
           latestLogin: new Date(),
+          isActive: true,
         },
       );
       return res.status(200).send({ message: 'ok' });
