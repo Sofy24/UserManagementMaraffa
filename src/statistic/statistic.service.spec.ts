@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { StatisticService } from './statistic.service';
 import { User } from '../entities/user.entity';
 import { UpdateUserStatDto } from './dto/update-user-stat.dto';
+import { StatisticService } from './statistic.service';
 
 describe('StatisticService', () => {
   let service: StatisticService;

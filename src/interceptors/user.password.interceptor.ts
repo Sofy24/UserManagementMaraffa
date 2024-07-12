@@ -1,10 +1,9 @@
 import {
+  CallHandler,
+  ExecutionContext,
   Injectable,
   NestInterceptor,
-  ExecutionContext,
-  CallHandler,
 } from '@nestjs/common';
-import { Observable, tap } from 'rxjs';
 
 import * as bcrypt from 'bcrypt';
 
