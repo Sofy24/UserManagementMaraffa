@@ -14,6 +14,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
   app.enableCors();
+  console.log(
+    `🔍 Traces are being sent to: ${process.env.OTEL_EXPORTER_OTLP_ENDPOINT}`,
+  );
+
   await app.listen(process.env.PORT || 3001);
 }
 bootstrap();

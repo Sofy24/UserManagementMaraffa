@@ -19,9 +19,9 @@ export class AppController {
       status: 'UP',
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
-      environment: process.env.NODE_ENV || 'development'
+      environment: process.env.NODE_ENV || 'development',
     };
-    
+
     res.status(HttpStatus.OK).json(healthCheck);
   }
 
@@ -33,26 +33,26 @@ export class AppController {
         status: 'UP',
         components: {
           ping: {
-            status: 'UP'
+            status: 'UP',
           },
           diskSpace: {
             status: 'UP',
             details: {
               total: this.getSystemInfo().disk.total,
               free: this.getSystemInfo().disk.free,
-              threshold: this.getSystemInfo().disk.threshold
-            }
-          }
+              threshold: this.getSystemInfo().disk.threshold,
+            },
+          },
         },
-        groups: ['liveness', 'readiness']
+        groups: ['liveness', 'readiness'],
       };
-      
+
       res.status(HttpStatus.OK).json(healthCheck);
     } catch (error) {
       res.status(HttpStatus.SERVICE_UNAVAILABLE).json({
         status: 'DOWN',
         timestamp: new Date().toISOString(),
-        error: error.message
+        error: error.message,
       });
     }
   }
@@ -62,7 +62,7 @@ export class AppController {
   getLiveness(@Res() res: Response) {
     res.status(HttpStatus.OK).json({
       status: 'UP',
-      groups: ['liveness']
+      groups: ['liveness'],
     });
   }
 
@@ -71,31 +71,31 @@ export class AppController {
   async getReadiness(@Res() res: Response) {
     try {
       const isReady = await this.appService.isApplicationReady();
-      
+
       if (isReady) {
         res.status(HttpStatus.OK).json({
           status: 'UP',
           components: {
             readinessState: {
-              status: 'UP'
-            }
+              status: 'UP',
+            },
           },
-          groups: ['readiness']
+          groups: ['readiness'],
         });
       } else {
         res.status(HttpStatus.SERVICE_UNAVAILABLE).json({
           status: 'DOWN',
           components: {
             readinessState: {
-              status: 'DOWN'
-            }
-          }
+              status: 'DOWN',
+            },
+          },
         });
       }
     } catch (error) {
       res.status(HttpStatus.SERVICE_UNAVAILABLE).json({
         status: 'DOWN',
-        error: error.message
+        error: error.message,
       });
     }
   }
@@ -107,38 +107,39 @@ export class AppController {
       app: {
         name: process.env.npm_package_name || 'nestjs-app',
         version: process.env.npm_package_version || '1.0.0',
-        description: process.env.npm_package_description || 'NestJS Application'
+        description:
+          process.env.npm_package_description || 'NestJS Application',
       },
       build: {
         time: new Date().toISOString(),
-        node: process.version
+        node: process.version,
       },
       git: {
         // Questi possono essere iniettati durante il build
         branch: process.env.GIT_BRANCH || 'unknown',
-        commit: process.env.GIT_COMMIT || 'unknown'
-      }
+        commit: process.env.GIT_COMMIT || 'unknown',
+      },
     };
-    
+
     res.status(HttpStatus.OK).json(info);
   }
 
   private getSystemInfo() {
     const memUsage = process.memoryUsage();
-    
+
     return {
       memory: {
         used: Math.round(memUsage.heapUsed / 1024 / 1024),
         total: Math.round(memUsage.heapTotal / 1024 / 1024),
-        unit: 'MB'
+        unit: 'MB',
       },
       disk: {
         total: '100GB', // Placeholder - in produzione usa fs.statSync
-        free: '50GB',   // Placeholder
-        threshold: '10GB'
+        free: '50GB', // Placeholder
+        threshold: '10GB',
       },
       uptime: process.uptime(),
-      pid: process.pid
+      pid: process.pid,
     };
   }
 }
