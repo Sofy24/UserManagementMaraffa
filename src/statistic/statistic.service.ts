@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/entities/user.entity';
-import { UpdateUserStatDto } from './dto/update-user-stat.dto';
+import { User } from '../domain/entities/user.entity';
+import { UpdateUserStatDto } from '../infrastructure/http/dto/update-stat.dto';
 
 @Injectable()
 export class StatisticService {

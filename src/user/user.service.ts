@@ -1,15 +1,31 @@
-import { Injectable, UseInterceptors } from '@nestjs/common';
-import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeepPartial, Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
-import { CrudRequest } from '@nestjsx/crud';
-import { UserPasswordInterceptor } from '../interceptors/user.password.interceptor';
-import { UpdateUserStatDto } from '../statistic/dto/update-user-stat.dto';
+import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
+import { Repository } from 'typeorm';
+import { User } from '../domain/entities/user.entity';
 
 @Injectable()
 export class UserService extends TypeOrmCrudService<User> {
   constructor(@InjectRepository(User) public repo: Repository<User>) {
     super(repo);
+  }
+
+  async setActive(
+    nickname: string,
+    isActive: boolean,
+    loginDate?: Date,
+  ): Promise<void> {
+    await this.repo.update(
+      { nickname },
+      { isActive, ...(loginDate && { latestLogin: loginDate }) },
+    );
+  }
+
+  async updatePassword(nickname: string, password: string): Promise<void> {
+    await this.repo.update({ nickname }, { password, latestLogin: new Date() });
+  }
+
+  async updateStats(nickname: string, updates: Partial<User>): Promise<void> {
+    await this.repo.update({ nickname }, updates);
   }
 }

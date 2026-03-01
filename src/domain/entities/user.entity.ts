@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Transform } from 'class-transformer';
 import { Column, Entity, Generated, PrimaryColumn } from 'typeorm';
-import { formatDate } from '../interceptors/date-transformer';
+import { formatDate } from '../../infrastructure/http/interceptors/date-transformer';
 
 @Entity()
 export class User {
-  @PrimaryColumn()
+  @Column()
   @Generated('uuid')
   id?: string;
 
@@ -47,9 +47,4 @@ export class User {
   @Column({ default: 0 })
   @ApiProperty({ default: 0 })
   criccaNum?: number;
-
-  @Column({ select: false })
-  @Exclude({ toPlainOnly: true })
-  @ApiProperty()
-  salt?: string;
 }

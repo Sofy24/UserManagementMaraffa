@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
-import { LoginModule } from './login/login.module';
-import { ConfigModule } from '@nestjs/config';
-import { StatisticModule } from './statistic/statistic.module';
+import { User } from './domain/entities/user.entity';
+import { UserModule } from './user.module';
 
 @Module({
   imports: [
@@ -22,8 +20,6 @@ import { StatisticModule } from './statistic/statistic.module';
       synchronize: true,
     }),
     UserModule,
-    LoginModule,
-    StatisticModule,
   ],
   controllers: [AppController],
   providers: [AppService],

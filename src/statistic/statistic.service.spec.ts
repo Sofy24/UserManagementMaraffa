@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { User } from '../entities/user.entity';
-import { UpdateUserStatDto } from './dto/update-user-stat.dto';
+import { User } from '../domain/entities/user.entity';
+import { UpdateUserStatDto } from '../infrastructure/http/dto/update-stat.dto';
 import { StatisticService } from './statistic.service';
 
 describe('StatisticService', () => {
@@ -33,12 +33,12 @@ describe('StatisticService', () => {
 
       const updatedUser = service.updateGameStatistics(user, updateBody);
 
-      expect(updatedUser.gamesWon).toEqual(6); // gamesWon should be incremented by 1
-      expect(updatedUser.criccaNum).toEqual(12); // criccaNum should be incremented by 2
-      expect(updatedUser.gamesPlayed).toEqual(21); // gamesPlayed should be incremented by 1
+      expect(updatedUser.gamesWon).toEqual(6);
+      expect(updatedUser.criccaNum).toEqual(12);
+      expect(updatedUser.gamesPlayed).toEqual(21);
     });
 
-    it('should not update gamesWon if updateBody.win is false', () => {
+    it('should not update gamesWon if win is false', () => {
       const user = new User();
       user.gamesWon = 5;
 
@@ -50,7 +50,7 @@ describe('StatisticService', () => {
 
       const updatedUser = service.updateGameStatistics(user, updateBody);
 
-      expect(updatedUser.gamesWon).toEqual(5); // gamesWon should remain unchanged
+      expect(updatedUser.gamesWon).toEqual(5);
     });
   });
 });
